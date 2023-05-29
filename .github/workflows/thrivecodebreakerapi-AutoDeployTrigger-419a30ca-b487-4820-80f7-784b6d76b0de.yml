@@ -1,0 +1,42 @@
+name: Trigger auto deployment for thrivecodebreakerapi
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '/src/api/GamesAPI/**'
+    - '.github/workflows/thrivecodebreakerapi-AutoDeployTrigger-419a30ca-b487-4820-80f7-784b6d76b0de.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.THRIVECODEBREAKERAPI_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/src/api/GamesAPI 
+          registryUrl: codebreakercontainerregistrythrive2023a1.azurecr.io
+          registryUsername: ${{ secrets.THRIVECODEBREAKERAPI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.THRIVECODEBREAKERAPI_REGISTRY_PASSWORD }}
+          containerAppName: thrivecodebreakerapi
+          resourceGroup: thrive2023
+          imageToBuild: codebreakercontainerregistrythrive2023a1.azurecr.io/thrivecodebreakerapi:${{ github.sha }}
+          dockerfilePath: Dockerfile
+
+     
+
