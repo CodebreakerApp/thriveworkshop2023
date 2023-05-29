@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="7.0.5" />
-    <PackageReference Include="Thrive2023.Codebreaker.Shared" Version="2.0.0-preview.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\CodeBreaker.Shared\CodeBreaker.Shared.csproj" />
   </ItemGroup>
 
 </Project>

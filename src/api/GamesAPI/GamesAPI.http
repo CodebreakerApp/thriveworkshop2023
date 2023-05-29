@@ -1,0 +1,29 @@
+﻿@GamesAPI_HostAddress = http://localhost:5118
+
+### GET games
+
+GET {{GamesAPI_HostAddress}}/games/
+
+### Create game
+POST {{GamesAPI_HostAddress}}/games/
+Content-Type: application/json
+
+{
+  "username": "christian"
+}
+
+### Set a move
+
+@gameId = ae47b35d-b7c2-48d3-bbdd-ad63a55faaf9
+
+POST {{GamesAPI_HostAddress}}/games/{{gameId}}/moves
+Content-Type: application/json
+
+{
+  "guessPegs": [
+    "Red",
+    "Green",
+    "Blue",
+    "White"
+  ]
+}
